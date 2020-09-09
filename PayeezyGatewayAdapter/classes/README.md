@@ -1,7 +1,7 @@
 # Payeezy Gateway Adapter apex classes
 
 These are the files for the implementation of gateway adapter for payeezy payment gateway.
-These classes work on release version 230
+These classes work on release version 228 and above.
 
 ## Deployment
 

@@ -260,24 +260,16 @@ public class PayeezyGatewayAdapterTest {
     
     private static commercepayments.AuthApiPaymentMethodRequest createAuthPaymentMethodRequest()
     {
-           //Create Address request
-        commercepayments.AddressRequest address = new commercepayments.AddressRequest('test', 'test', 'test', 'test', 'test');
         //Create a PaymentMethod instance
         commercepayments.AuthApiPaymentMethodRequest paymentMethod = new commercepayments.AuthApiPaymentMethodRequest(getCardPaymentMethod());
-        //paymentMethod.address = address;
         return paymentMethod;
-    
     }
     
     private static commercepayments.SaleApiPaymentMethodRequest createSalePaymentMethodRequest()
     {
-           //Create Address request
-        commercepayments.AddressRequest address = new commercepayments.AddressRequest('test', 'test', 'test', 'test', 'test');
         //Create a PaymentMethod instance
         commercepayments.SaleApiPaymentMethodRequest paymentMethod = new commercepayments.SaleApiPaymentMethodRequest(getCardPaymentMethod());
-        paymentMethod.address = address;
         return paymentMethod;
-    
     }
     
     private static commercepayments.CardPaymentMethodRequest getCardPaymentMethod(){
