@@ -16,6 +16,7 @@ The classes need to be compiled in this order:
 6. ReferencedRefundTransactionService.apex
 7. SaleTransactionService.apex
 8. TokenizeTransactionService.apex
-9. TransactionServiceAdapter.apex
-10. PayeezyGatewayAdapter.apex
+9. AuthReversalTransactionService.apex
+10. TransactionServiceAdapter.apex
+11. PayeezyGatewayAdapter.apex
 ```
