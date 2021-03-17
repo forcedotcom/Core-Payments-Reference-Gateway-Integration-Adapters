@@ -100,6 +100,18 @@ public class AuthorizationTransactionService extends AbstractTransactionService{
     }
     
     /**
+     * Function to return merchant_ref passed as additional data
+     */
+      private String getMerchantRef(map<String,String> additionalData){
+        String merchantRef='';
+        if(additionalData!=null && additionalData.containsKey('merchant_ref'))
+        {
+            merchantRef=additionalData.get('merchant_ref');
+        }
+        return merchantRef;
+    }
+    
+    /**
      * Function to build request body for Authorization Transaction
      */
     private String buildAuthRequestBody(commercepayments.AuthorizationRequest authRequest) {
@@ -110,7 +122,7 @@ public class AuthorizationTransactionService extends AbstractTransactionService{
         commercepayments.GatewayErrorResponse error;
         // Write data to the JSON string
         jsonGeneratorInstance.writeStartObject();
-        jsonGeneratorInstance.writeStringField('merchant_ref', '');
+        jsonGeneratorInstance.writeStringField('merchant_ref', getMerchantRef(authRequest.additionalData));
         jsonGeneratorInstance.writeStringField('transaction_type', 'authorize');
         if(authRequest.amount!=null)
             //Amount is multiplied by 100 as gateway accepts input in cents
