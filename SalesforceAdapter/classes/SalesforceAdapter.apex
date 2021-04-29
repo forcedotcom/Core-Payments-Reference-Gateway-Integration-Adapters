@@ -30,6 +30,9 @@ global class SalesforceAdapter implements commercepayments.PaymentGatewayAdapter
             else if (requestType == commercepayments.RequestType.Tokenize) {
                     response = createTokenizeResponse((commercepayments.PaymentMethodTokenizationRequest)gatewayContext.getPaymentRequest());
             }
+            else if (requestType == commercepayments.RequestType.AuthorizationReversal) {
+                    response = createAuthReversalResponse((commercepayments.AuthorizationReversalRequest)gatewayContext.getPaymentRequest());
+            }
             return response;
         }
         catch(SalesforceValidationException e)
@@ -74,6 +77,26 @@ global class SalesforceAdapter implements commercepayments.PaymentGatewayAdapter
         paymentMethodTokenizationResponse.setGatewayToken(getRandomNumber(8)+getRandomNumber(8));
         authResponse.setPaymentMethodTokenizationResponse(paymentMethodTokenizationResponse);
         return authResponse;
+    }
+    
+    public commercepayments.GatewayResponse createAuthReversalResponse(commercepayments.AuthorizationReversalRequest authReversalRequest) {
+        commercepayments.AuthorizationReversalResponse authReversalResponse = new commercepayments.AuthorizationReversalResponse();
+        if(authReversalRequest.amount!=null )
+        {
+            authReversalResponse.setAmount(authReversalRequest.amount);
+        }
+        else
+        {
+             throw new SalesforceValidationException('Required Field Missing : Amount');             
+        }
+   
+        system.debug('Response - success');
+        authReversalResponse.setGatewayDate(system.now());
+        authReversalResponse.setGatewayResultCode('00');
+        authReversalResponse.setGatewayResultCodeDescription('Transaction Normal');
+        authReversalResponse.setGatewayReferenceNumber('SF'+getRandomNumber(6));
+        authReversalResponse.setSalesforceResultCodeInfo(SUCCESS_SALESFORCE_RESULT_CODE_INFO);
+        return authReversalResponse;
     }
     
     public commercepayments.GatewayResponse createCaptureResponse(commercepayments.CaptureRequest captureRequest) {

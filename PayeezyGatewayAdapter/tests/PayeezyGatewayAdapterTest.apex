@@ -41,6 +41,25 @@ public class PayeezyGatewayAdapterTest {
         system.assert(authResponse instanceOf commercepayments.GatewayErrorResponse, 'Response is not a valid Authorization response');
         
     }
+
+    public static testmethod void testAuthReversalRequest() {
+        PaymentAuthorization auth = initializeAuthObject();
+        insert auth;
+        //Dmls and http request can't be performed in a single transaction in apex
+        //segreagating the transaction by starting a test context
+        Test.startTest();
+        // Set mock callout class 
+        Test.setMock(HttpCalloutMock.class, new PaymentCalloutMock());
+        //Create an auth reversal request
+        commercepayments.AuthorizationReversalRequest authReversalRequest = new commercepayments.AuthorizationReversalRequest(1500, auth.id);
+        
+        commercepayments.PaymentGatewayContext p = new commercepayments.PaymentGatewayContext(authReversalRequest, commercepayments.RequestType.AuthorizationReversal);
+        PayeezyGatewayAdapter adapter = new PayeezyGatewayAdapter();
+        
+        commercepayments.GatewayResponse authReversalResponse = adapter.processRequest(p);
+        system.assert(authReversalResponse instanceOf commercepayments.AuthorizationReversalResponse, 'Response is not a valid Capture response');
+        Test.stopTest();
+    }
     
     public static testmethod void testCaptureRequest() {
         PaymentAuthorization auth = initializeAuthObject();
@@ -60,6 +79,8 @@ public class PayeezyGatewayAdapterTest {
         system.assert(captureResponse instanceOf commercepayments.CaptureResponse, 'Response is not a valid Capture response');
         Test.stopTest();
     }
+
+
     
     public static testmethod void testReferencedRefundRequest() {
         Payment pmt = initializePaymentObject();
@@ -138,6 +159,24 @@ public class PayeezyGatewayAdapterTest {
         
     }
     
+    public static testmethod void testAuthReversalFailureRequest() {
+        PaymentAuthorization auth = initializeAuthObject();
+        insert auth;
+        //Dmls and http request can't be performed in a single transaction in apex
+        //segreagating the transaction by starting a test context
+        Test.startTest();
+        // Set mock callout class 
+        Test.setMock(HttpCalloutMock.class, new PaymentCalloutFailureMock());
+        //Create an auth reversal request
+        commercepayments.AuthorizationReversalRequest authReversalRequest = new commercepayments.AuthorizationReversalRequest(1500, auth.id);
+        
+        commercepayments.PaymentGatewayContext p = new commercepayments.PaymentGatewayContext(authReversalRequest, commercepayments.RequestType.AuthorizationReversal);
+        PayeezyGatewayAdapter adapter = new PayeezyGatewayAdapter();
+        
+        commercepayments.GatewayResponse authReversalResponse = adapter.processRequest(p);
+        system.assert(authReversalResponse instanceOf commercepayments.AuthorizationReversalResponse, 'Response is not a valid Auth Reversal response');
+        Test.stopTest();
+    }
     
     public static testmethod void testCaptureFailureRequest() {
         PaymentAuthorization auth = initializeAuthObject();
