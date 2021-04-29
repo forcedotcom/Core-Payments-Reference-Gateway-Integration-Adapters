@@ -10,6 +10,7 @@ public class TransactionServiceAdapter {
     private static  ReferencedRefundTransactionService  refRefundTxnService;
     private static  TokenizeTransactionService tokenizeTxnService;
     private static  SaleTransactionService saleTxnService;
+    private static  AuthReversalTransactionService authReversalTxnService;
     
     /**
      * Static method that returns the instance of a service based on the request type
@@ -56,6 +57,14 @@ public class TransactionServiceAdapter {
                   saleTxnService = new SaleTransactionService(gatewayContext);
              }
              return  saleTxnService;
+        }
+        //Auth Reversal Service
+        else if (requestType == commercepayments.RequestType.AuthorizationReversal){
+            if(authReversalTxnService ==null )
+             {
+                  authReversalTxnService = new AuthReversalTransactionService(gatewayContext);
+             }
+             return  authReversalTxnService;
         }
         // Add new transaction services here
         else {

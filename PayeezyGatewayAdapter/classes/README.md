@@ -1,7 +1,7 @@
 # Payeezy Gateway Adapter apex classes
 
 These are the files for the implementation of gateway adapter for payeezy payment gateway.
-These classes work on release version 228 and above.
+These classes work on release version 230 and above.
 
 ## Deployment
 
@@ -16,6 +16,7 @@ The classes need to be compiled in this order:
 6. ReferencedRefundTransactionService.apex
 7. SaleTransactionService.apex
 8. TokenizeTransactionService.apex
-9. TransactionServiceAdapter.apex
-10. PayeezyGatewayAdapter.apex
+9. AuthReversalTransactionService.apex
+10. TransactionServiceAdapter.apex
+11. PayeezyGatewayAdapter.apex
 ```

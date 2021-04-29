@@ -2,7 +2,7 @@
 
 Files for the implementation of salesforce adapter.
 This is a dummy adapter and does not perform an actual call to any gateway.
-These classes work on release version 228 and above.
+These classes work on release version 230 and above.
 
 ## Deployment
 
